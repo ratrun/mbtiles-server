@@ -3,8 +3,25 @@ var express = require("express"),
     MBTiles = require('mbtiles'),
     p = require("path");
 
+var fs = require('fs'); 
+require('prototypes');
+
 // path to the mbtiles; default is the server.js directory
 var tilesDir = __dirname;
+
+var result = [];
+fs.readdir(".", function (err, files) {
+  if (err) throw err;
+  console.log("Serving following areas:");
+  files.forEach(function(value){
+    if (value.endsWith('.mbtiles'))
+    {
+       var extract = value.substringUpTo('.mbtiles');
+       result.push({country : extract});
+       console.log(extract);
+    }
+   });
+});
 
 // Set return header
 function getContentType(t) {
@@ -28,6 +45,10 @@ function getContentType(t) {
     header["Content-Type"] = "application/x-protobuf";
     header["Content-Encoding"] = "gzip";
   }
+  if (t === "json") {
+     header["Content-Type"] = "application/json";
+     console.log("application/json");
+  }
 
   return header;
 }
@@ -46,6 +67,12 @@ app.get('/:s/:z/:x/:y.:t', function(req, res) {
     });
     if (err) console.log("error opening database");
   });
+});
+
+// Provide a list of served mbtilesareas
+app.get('/mbtilesareas.json', function(req, res) {
+  res.set(getContentType("json"));
+  res.send(result);
 });
 
 // start up the server

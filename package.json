@@ -5,13 +5,14 @@
   "main": "tileserver.js",
   "dependencies": {
     "express": "*",
-    "mbtiles": "*"
+    "mbtiles": "*",
+    "prototypes": "*"
   },
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": "https://github.com/tobinbradley/mbtiles-server",
-  "author": "Tobin Bradley",
+  "repository": "https://github.com/ratrun/mbtiles-server",
+  "author": "ratrun",
   "license": "MIT"
 }
