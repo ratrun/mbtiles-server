@@ -47,7 +47,6 @@ function getContentType(t) {
   }
   if (t === "json") {
      header["Content-Type"] = "application/json";
-     console.log("application/json");
   }
 
   return header;
