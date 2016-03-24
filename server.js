@@ -17,8 +17,12 @@ fs.readdir(".", function (err, files) {
     if (value.endsWith('.mbtiles'))
     {
        var extract = value.substringUpTo('.mbtiles');
-       result.push({country : extract});
-       console.log(extract);
+       // Don't show up the overlay
+       if (extract !== 'biketourplaner')
+       {
+         result.push({country : extract});
+         console.log(extract);
+       }
     }
    });
 });
@@ -30,6 +34,7 @@ function getContentType(t) {
   // CORS
   header["Access-Control-Allow-Origin"] = "*";
   header["Access-Control-Allow-Headers"] = "Origin, X-Requested-With, Content-Type, Accept";
+//  header["Expires"] = new Date(Date.now() + 345600000).toUTCString();
 
   // Cache
   //header["Cache-Control"] = "public, max-age=2592000";
@@ -54,6 +59,7 @@ function getContentType(t) {
 
 // tile cannon
 app.get('/:s/:z/:x/:y.:t', function(req, res) {
+  // console.log(req.params.s + "." + req.params.z + "." + req.params.x + "." + req.params.y);
   new MBTiles(p.join(tilesDir, req.params.s + '.mbtiles'), function(err, mbtiles) {
     mbtiles.getTile(req.params.z, req.params.x, req.params.y, function(err, tile, headers) {
       if (err) {
