@@ -18,7 +18,7 @@ fs.readdir(".", function (err, files) {
     {
        var extract = value.substringUpTo('.mbtiles');
        // Don't show up the overlay
-       if (extract !== 'biketourplaner')
+       if (extract.substring(0,7) !== 'bicycle')
        {
          result.push({country : extract});
          console.log(extract);
@@ -80,6 +80,12 @@ app.get('/mbtilesareas.json', function(req, res) {
   res.send(result);
 });
 
+process.on( "SIGINT", function() {
+  console.log('MBTSERVER CLOSING [SIGINT]');
+  server.close();
+  process.exit(200);
+} );
+
 // start up the server
 console.log('Listening on port: ' + 3000);
-app.listen(3000);
+var server = app.listen(3000);
