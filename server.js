@@ -80,6 +80,16 @@ app.get('/mbtilesareas.json', function(req, res) {
   res.send(result);
 });
 
+// Stop the server via request
+app.get('/4cede326-7166-4cbd-994f-699c6dc271e9', function(req, res) {
+  console.log('Instruction for stopping received');
+  res.set(getContentType("json"));
+  result = '200OK'; // Confirmation 
+  res.send(result);
+  server.close();
+  process.exit(100);
+});
+
 process.on( "SIGINT", function() {
   console.log('MBTSERVER CLOSING [SIGINT]');
   server.close();
