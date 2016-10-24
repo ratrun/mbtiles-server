@@ -5,12 +5,14 @@ var express = require("express"),
 
 var fs = require('fs'); 
 require('prototypes');
+var path = require('path');
 
 // path to the mbtiles; default is the server.js directory
-var tilesDir = __dirname;
+var tilesDir = path.normalize(__dirname + "/../data/mbtiles");
+console.log("Serving files from " + tilesDir);
 
 var result = [];
-fs.readdir(".", function (err, files) {
+fs.readdir(tilesDir, function (err, files) {
   if (err) throw err;
   console.log("Serving following areas:");
   files.forEach(function(value){
