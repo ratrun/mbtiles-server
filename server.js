@@ -7,8 +7,8 @@ var fs = require('fs');
 require('prototypes');
 var path = require('path');
 
-// path to the mbtiles; default is the server.js directory
-var tilesDir = path.normalize(__dirname + "/../data/mbtiles");
+// path to the mbtiles: /../data/mbtiles
+var tilesDir = path.join(__dirname, "/../data/mbtiles");
 console.log("Serving files from " + tilesDir);
 
 var result = [];
@@ -19,11 +19,11 @@ fs.readdir(tilesDir, function (err, files) {
     if (value.endsWith('.mbtiles'))
     {
        var extract = value.substringUpTo('.mbtiles');
+       console.log(extract);
        // Don't show up the overlay
        if (extract.substring(0,7) !== 'bicycle')
        {
          result.push({country : extract});
-         console.log(extract);
        }
     }
    });
